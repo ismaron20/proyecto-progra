@@ -1,20 +1,129 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Barberia Estilo & Clase
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="irAdmin()" color="warning">
+        Admin
+      </ion-button>
+      <ion-button (click)="cerrarSesion()" color="medium">
+        Salir
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="ion-padding">
+  <div class="slogan-container">
+    <h2>"Estilo & Clase"</h2>
   </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tus datos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="cliente.nombre" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Telefono (+506)</ion-label>
+        <ion-input [(ngModel)]="cliente.telefono" type="tel"></ion-input>
+      </ion-item>
+      <ion-button expand="block" color="warning" (click)="guardarCliente()">
+        Guardar mis datos
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Elige tu barbero</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-segment [(ngModel)]="cita.barbero">
+        <ion-segment-button *ngFor="let barbero of barberosActivos" [value]="barbero.nombre">
+          {{ barbero.nombre }}  {{ barbero.calificacion }}
+        </ion-segment-button>
+      </ion-segment>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Servicios</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-radio-group [(ngModel)]="servicioSeleccionado">
+          <ion-item *ngFor="let servicio of servicios">
+            <ion-radio [value]="servicio.nombre" slot="start"></ion-radio>
+            <ion-label>{{ servicio.nombre }}</ion-label>
+            <ion-note slot="end">₡{{ servicio.precio }}</ion-note>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Agenda tu cita</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Fecha</ion-label>
+        <ion-datetime [(ngModel)]="cita.fecha" presentation="date" [min]="fechaMinima"></ion-datetime>
+      </ion-item>
+      
+      <div class="horario-grid">
+        <ion-button *ngFor="let hora of horasDisponibles" 
+                   [color]="getColorHora(hora)"
+                   [disabled]="isHoraOcupada(hora)"
+                   (click)="seleccionarHora(hora)"
+                   expand="block" size="small">
+          {{ hora }}
+        </ion-button>
+      </div>
+      <ion-text color="medium">
+        <small>Verde Disponible | Rojo Ocupado | Azul Seleccionado</small>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Resumen de cita</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Servicio:</ion-label>
+          <ion-note>{{ servicioActual?.nombre || 'No seleccionado' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Precio:</ion-label>
+          <ion-note>₡{{ servicioActual?.precio || 0 }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Barbero:</ion-label>
+          <ion-note>{{ cita.barbero || 'No seleccionado' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Fecha:</ion-label>
+          <ion-note>{{ cita.fecha || 'No seleccionada' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Hora:</ion-label>
+          <ion-note>{{ cita.hora || 'No seleccionada' }}</ion-note>
+        </ion-item>
+      </ion-list>
+      
+      <ion-button expand="block" color="warning" (click)="confirmarCita()" [disabled]="!citaValida()">
+        Confirmar cita
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

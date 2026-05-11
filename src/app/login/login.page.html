@@ -1,0 +1,84 @@
+<!-- Pantalla de login principal -->
+<ion-content class="ion-padding">
+  <!-- Logo y titulo -->
+  <div class="logo-container">
+    <div class="logo-grande">✂️</div>
+    <h1>Barberia Estilo & Clase</h1>
+    <p class="slogan">"Estilo & Clase"</p>
+  </div>
+
+  <!-- Pantalla de seleccion: Cliente vs Administrador -->
+  <div *ngIf="modo === 'seleccion'" class="opciones-container">
+    <ion-card class="opcion-card" (click)="seleccionarCliente()">
+      <ion-card-content class="opcion-content">
+        <div class="opcion-icon">👤</div>
+        <div class="opcion-titulo">Soy Cliente</div>
+        <div class="opcion-descripcion">Agendar cita, ver servicios</div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="opcion-card" (click)="seleccionarAdmin()">
+      <ion-card-content class="opcion-content">
+        <div class="opcion-icon">👑</div>
+        <div class="opcion-titulo">Soy Administrador</div>
+        <div class="opcion-descripcion">Gestionar barberia</div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Pantalla de registro de cliente -->
+  <div *ngIf="modo === 'cliente'">
+    <ion-button fill="clear" (click)="volver()" class="volver-btn">
+      ← Volver
+    </ion-button>
+    
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Registro de Cliente</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Nombre completo</ion-label>
+          <ion-input [(ngModel)]="clienteNombre" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Telefono (+506)</ion-label>
+          <ion-input [(ngModel)]="clienteTelefono" type="tel"></ion-input>
+        </ion-item>
+        <ion-button expand="block" color="warning" (click)="registrarCliente()">
+          Registrarme y continuar
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Pantalla de ingreso de administrador -->
+  <div *ngIf="modo === 'admin'">
+    <ion-button fill="clear" (click)="volver()" class="volver-btn">
+      ← Volver
+    </ion-button>
+    
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Acceso Administrador</ion-card-title>
+        <ion-card-subtitle>Solo personal autorizado</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Correo electronico</ion-label>
+          <ion-input [(ngModel)]="adminEmail" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Contrasena</ion-label>
+          <ion-input [(ngModel)]="adminPassword" type="password"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="errorAdmin">
+          <p>{{ errorAdmin }}</p>
+        </ion-text>
+        <ion-button expand="block" color="warning" (click)="ingresarAdmin()">
+          Ingresar
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
