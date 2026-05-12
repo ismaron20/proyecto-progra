@@ -1,4 +1,3 @@
-// Panel de administrador - Gestion completa de la barberia
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +10,6 @@ import {
   IonButtons, IonIcon
 } from '@ionic/angular/standalone';
 import { BarberiaService } from '../services/barberia.service';
-import { AuthService } from '../services/auth.service';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline } from 'ionicons/icons';
 
@@ -38,21 +36,13 @@ export class AdminPage {
 
   constructor(
     public barberiaService: BarberiaService,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) {
-    // Verificar si esta autenticado
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      alert('No tienes permiso para acceder aqui');
-    }
-    
     this.bloqueoFecha = new Date().toISOString();
     this.barberiaService.metodosPago.forEach(m => this.metodoSeleccionado[m] = true);
     addIcons({ arrowBackOutline });
   }
 
-  // Bloquea un horario manualmente
   bloquearHorario() {
     if (this.bloqueoFecha && this.bloqueoHora) {
       const fecha = this.bloqueoFecha.split('T')[0];
@@ -63,37 +53,30 @@ export class AdminPage {
     }
   }
 
-  // Agrega un nuevo barbero y actualiza la lista
   async agregarBarbero() {
     if (this.nuevoBarbero.trim()) {
       await this.barberiaService.agregarBarbero(this.nuevoBarbero);
       this.nuevoBarbero = '';
       alert('Barbero agregado correctamente');
-      // Recargar la lista de barberos
       await this.barberiaService.cargarDatos();
     } else {
       alert('Escribe un nombre');
     }
   }
 
-  // Cambia el estado activo/inactivo de un barbero
   async toggleBarbero(barbero: any) {
-    console.log('Toggle barbero:', barbero.nombre, 'Activo:', barbero.activo);
     if (barbero.id) {
       await this.barberiaService.toggleBarbero(barbero.id, barbero.activo);
-      // Recargar datos para actualizar ambas interfaces
       await this.barberiaService.cargarDatos();
     }
   }
 
-  // Vuelve a la pantalla de login
+  // Funcion para volver a la pantalla anterior (login)
   volver() {
     this.router.navigate(['/login']);
   }
 
-  // Cierra sesion y vuelve al login
-  async cerrarSesion() {
-    await this.authService.logout();
+  cerrarSesion() {
     this.router.navigate(['/login']);
   }
 }

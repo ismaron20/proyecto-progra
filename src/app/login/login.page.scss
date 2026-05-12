@@ -1,90 +1,236 @@
-// Estilos de la pantalla de login
-// Fondo negro mate, texto dorado, tarjetas elegantes
+// Fondo general
+ion-content {
+  --background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
 
+.fondo-decorativo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+// Logo y titulo
 .logo-container {
   text-align: center;
-  margin-top: 60px;
-  margin-bottom: 50px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .logo-grande {
-  background-color: #d4af37;  // Dorado
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  background: linear-gradient(145deg, #d4af37, #b8960f);
+  width: 90px;
+  height: 90px;
+  border-radius: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 50px;
   margin: 0 auto 20px;
-  color: #0a0a0a;  // Negro mate
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
 }
 
-h1 {
-  color: #d4af37;  // Dorado
-  font-size: 28px;
-  margin-bottom: 10px;
+.logo-icon {
+  font-size: 50px;
+  color: #0a0a0a;
 }
 
-.slogan {
+.titulo-principal {
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #d4af37, #f5e6a3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.slogan-nuevo {
   color: #d4af37;
   font-style: italic;
-  font-size: 18px;
+  font-size: 16px;
+  margin-top: 8px;
+  opacity: 0.8;
 }
 
+// Tarjetas de opciones
 .opciones-container {
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+}
+
+.tarjeta-cliente, .tarjeta-admin {
+  background: rgba(30, 30, 30, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   padding: 20px;
-}
-
-.opcion-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   cursor: pointer;
-  transition: transform 0.3s;
-  background-color: #1a1a1a;  // Fondo oscuro
+  transition: all 0.3s ease;
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-.opcion-card:hover {
-  transform: scale(1.02);
+.tarjeta-cliente:hover, .tarjeta-admin:hover {
+  transform: translateX(5px);
+  border-color: rgba(212, 175, 55, 0.5);
+  background: rgba(40, 40, 40, 0.9);
 }
 
-.opcion-content {
-  text-align: center;
-  padding: 30px;
+.icono-cliente, .icono-admin {
+  width: 55px;
+  height: 55px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
 }
 
-.opcion-icon {
-  font-size: 60px;
-  margin-bottom: 15px;
+.icono-cliente {
+  background: linear-gradient(145deg, #2a6f3f, #1e4f2e);
+  color: #4caf50;
 }
 
-.opcion-titulo {
-  font-size: 24px;
-  font-weight: bold;
+.icono-admin {
+  background: linear-gradient(145deg, #8b691b, #6b4f12);
   color: #d4af37;
-  margin-bottom: 10px;
 }
 
-.opcion-descripcion {
-  color: #cccccc;
-  font-size: 14px;
+.texto-cliente h3, .texto-admin h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
 }
 
-.volver-btn {
-  margin-bottom: 20px;
+.texto-cliente p, .texto-admin p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #999;
+}
+
+.flecha {
+  margin-left: auto;
+  font-size: 20px;
+  color: #d4af37;
+}
+
+// Header volver
+.header-volver {
+  padding: 10px 0;
+}
+
+.btn-volver {
   --color: #d4af37;
+  --color-hover: #f5e6a3;
+  font-weight: 500;
 }
 
-ion-card-title {
+// Formularios
+.formulario-cliente, .formulario-admin {
+  background: rgba(30, 30, 30, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 30px 25px;
+  margin-top: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.admin-icono-grande {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-icono-grande ion-icon {
+  font-size: 60px;
   color: #d4af37;
 }
 
-ion-card-subtitle {
-  color: #888888;
+.titulo-formulario {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 8px 0;
 }
 
-ion-item {
-  --background: #2a2a2a;
-  --border-color: #d4af37;
+.subtitulo-formulario {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 30px;
+}
+
+.campo {
+  background: #2a2a2a;
+  border-radius: 15px;
+  margin-bottom: 16px;
+  padding: 5px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #3a3a3a;
+  transition: all 0.3s ease;
+}
+
+.campo:focus-within {
+  border-color: #d4af37;
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+.campo-icono {
+  font-size: 20px;
+  color: #d4af37;
+}
+
+.campo ion-input {
+  flex: 1;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  color: #ffffff;
+}
+
+// Botones
+.btn-registrar, .btn-ingresar {
+  --background: linear-gradient(135deg, #d4af37, #b8960f);
+  --background-hover: linear-gradient(135deg, #e0c040, #c4a02e);
+  --border-radius: 15px;
+  --padding-top: 18px;
+  --padding-bottom: 18px;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: none;
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+}
+
+.error-mensaje {
+  text-align: center;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+// Animacion de entrada
+.opciones-container, .formulario-cliente, .formulario-admin {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

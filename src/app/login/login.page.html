@@ -1,84 +1,105 @@
-<!-- Pantalla de login principal -->
 <ion-content class="ion-padding">
+  <!-- Fondo decorativo -->
+  <div class="fondo-decorativo"></div>
+
   <!-- Logo y titulo -->
   <div class="logo-container">
-    <div class="logo-grande">✂️</div>
-    <h1>Barberia Estilo & Clase</h1>
-    <p class="slogan">"Estilo & Clase"</p>
+    <div class="logo-grande">
+      <ion-icon name="cut-outline" class="logo-icon"></ion-icon>
+    </div>
+    <h1 class="titulo-principal">Barbería</h1>
+    <p class="slogan-nuevo">"Estilo & Clase"</p>
   </div>
 
-  <!-- Pantalla de seleccion: Cliente vs Administrador -->
+  <!-- Pantalla de seleccion -->
   <div *ngIf="modo === 'seleccion'" class="opciones-container">
-    <ion-card class="opcion-card" (click)="seleccionarCliente()">
-      <ion-card-content class="opcion-content">
-        <div class="opcion-icon">👤</div>
-        <div class="opcion-titulo">Soy Cliente</div>
-        <div class="opcion-descripcion">Agendar cita, ver servicios</div>
-      </ion-card-content>
-    </ion-card>
+    <div class="tarjeta-cliente" (click)="seleccionarCliente()">
+      <div class="icono-cliente">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+      <div class="texto-cliente">
+        <h3>Cliente</h3>
+        <p>Agenda tu cita fácilmente</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="flecha"></ion-icon>
+    </div>
 
-    <ion-card class="opcion-card" (click)="seleccionarAdmin()">
-      <ion-card-content class="opcion-content">
-        <div class="opcion-icon">👑</div>
-        <div class="opcion-titulo">Soy Administrador</div>
-        <div class="opcion-descripcion">Gestionar barberia</div>
-      </ion-card-content>
-    </ion-card>
+    <div class="tarjeta-admin" (click)="seleccionarAdmin()">
+      <div class="icono-admin">
+        <ion-icon name="shield-outline"></ion-icon>
+      </div>
+      <div class="texto-admin">
+        <h3>Administrador</h3>
+        <p>Gestiona tu barbería</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="flecha"></ion-icon>
+    </div>
   </div>
 
-  <!-- Pantalla de registro de cliente -->
+  <!-- Registro de cliente -->
   <div *ngIf="modo === 'cliente'">
-    <ion-button fill="clear" (click)="volver()" class="volver-btn">
-      ← Volver
-    </ion-button>
-    
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Registro de Cliente</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-label position="floating">Nombre completo</ion-label>
-          <ion-input [(ngModel)]="clienteNombre" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Telefono (+506)</ion-label>
-          <ion-input [(ngModel)]="clienteTelefono" type="tel"></ion-input>
-        </ion-item>
-        <ion-button expand="block" color="warning" (click)="registrarCliente()">
-          Registrarme y continuar
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
+    <div class="header-volver">
+      <ion-button fill="clear" (click)="volver()" class="btn-volver">
+        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+        Volver
+      </ion-button>
+    </div>
+
+    <div class="formulario-cliente">
+      <h2 class="titulo-formulario">Registro de Cliente</h2>
+      <p class="subtitulo-formulario">Completa tus datos para agendar</p>
+
+      <div class="campo">
+        <ion-icon name="person-outline" class="campo-icono"></ion-icon>
+        <ion-input [(ngModel)]="clienteNombre" type="text" placeholder="Nombre completo"></ion-input>
+      </div>
+
+      <div class="campo">
+        <ion-icon name="call-outline" class="campo-icono"></ion-icon>
+        <ion-input [(ngModel)]="clienteTelefono" type="tel" placeholder="Teléfono (+506)"></ion-input>
+      </div>
+
+      <ion-button expand="block" class="btn-registrar" (click)="registrarCliente()">
+        Registrarme
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 
-  <!-- Pantalla de ingreso de administrador -->
+  <!-- Login de administrador -->
   <div *ngIf="modo === 'admin'">
-    <ion-button fill="clear" (click)="volver()" class="volver-btn">
-      ← Volver
-    </ion-button>
-    
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Acceso Administrador</ion-card-title>
-        <ion-card-subtitle>Solo personal autorizado</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-label position="floating">Correo electronico</ion-label>
-          <ion-input [(ngModel)]="adminEmail" type="email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Contrasena</ion-label>
-          <ion-input [(ngModel)]="adminPassword" type="password"></ion-input>
-        </ion-item>
-        <ion-text color="danger" *ngIf="errorAdmin">
-          <p>{{ errorAdmin }}</p>
-        </ion-text>
-        <ion-button expand="block" color="warning" (click)="ingresarAdmin()">
-          Ingresar
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
+    <div class="header-volver">
+      <ion-button fill="clear" (click)="volver()" class="btn-volver">
+        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+        Volver
+      </ion-button>
+    </div>
+
+    <div class="formulario-admin">
+      <div class="admin-icono-grande">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+      </div>
+      <h2 class="titulo-formulario">Acceso Administrador</h2>
+      <p class="subtitulo-formulario">Ingresa tus credenciales</p>
+
+      <div class="campo">
+        <ion-icon name="mail-outline" class="campo-icono"></ion-icon>
+        <ion-input [(ngModel)]="adminEmail" type="email" placeholder="Correo electrónico"></ion-input>
+      </div>
+
+      <div class="campo">
+        <ion-icon name="lock-closed-outline" class="campo-icono"></ion-icon>
+        <ion-input [(ngModel)]="adminPassword" type="password" placeholder="Contraseña"></ion-input>
+      </div>
+
+      <ion-text color="danger" *ngIf="errorAdmin">
+        <p class="error-mensaje">{{ errorAdmin }}</p>
+      </ion-text>
+
+      <ion-button expand="block" class="btn-ingresar" (click)="ingresarAdmin()">
+        Ingresar
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 </ion-content>

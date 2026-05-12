@@ -1,10 +1,15 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="volver()">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Panel Administrador</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cerrarSesion()" color="medium">
+        Salir
       </ion-button>
-      cerrar sesión
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

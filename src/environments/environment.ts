@@ -1,7 +1,5 @@
-// Configuracion de Firebase para conectar la aplicacion con la base de datos en la nube
-// Estos datos los obtienes de Firebase Console > Configuracion del proyecto
 export const environment = {
-  production: false,  // Modo desarrollo (cambiar a true para produccion)
+  production: false,
   firebaseConfig: {
     apiKey: "AIzaSyAbuEpWUf90fU-STVeJFpibsYqwvj-SOtQ",
     authDomain: "barberia-estilo-y-clase.firebaseapp.com",
