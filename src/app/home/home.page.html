@@ -1,126 +1,165 @@
-<ion-header translucent="true">
-  <ion-toolbar>
-    <ion-title>
-      Barberia Estilo & Clase
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="cerrarSesion()" color="medium">
-        Salir
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
-  <div class="slogan-container">
-    <h2>"Estilo & Clase"</h2>
+  <!-- Fondo -->
+  <div class="bg-pattern"></div>
+  
+  <!-- Header Moderno -->
+  <div class="header-modern">
+    <div class="user-greeting">
+      <div class="avatar">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </div>
+      <div class="greeting-text">
+        <p>Bienvenido de vuelta</p>
+        <h2>{{ cliente.nombre || 'Cliente' }}</h2>
+      </div>
+    </div>
+    <button class="logout-btn" (click)="cerrarSesion()">
+      <ion-icon name="exit-outline"></ion-icon>
+    </button>
   </div>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Tus datos</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input [(ngModel)]="cliente.nombre" type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Telefono (+506)</ion-label>
-        <ion-input [(ngModel)]="cliente.telefono" type="tel"></ion-input>
-      </ion-item>
-      <ion-button expand="block" color="warning" (click)="guardarCliente()">
-        Guardar mis datos
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+  <!-- Stats Cards -->
+  <div class="stats-row">
+    <div class="stat-box">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <span>Próxima cita</span>
+      <strong>---</strong>
+    </div>
+    <div class="stat-box">
+      <ion-icon name="cut-outline"></ion-icon>
+      <span>Servicios</span>
+      <strong>4</strong>
+    </div>
+    <div class="stat-box">
+      <ion-icon name="star-outline"></ion-icon>
+      <span>Barberos</span>
+      <strong>{{ barberosActivos.length }}</strong>
+    </div>
+  </div>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Elige tu barbero</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-segment [(ngModel)]="cita.barbero">
-        <ion-segment-button *ngFor="let barbero of barberosActivos" [value]="barbero.nombre">
-          {{ barbero.nombre }}  {{ barbero.calificacion }}
-        </ion-segment-button>
-      </ion-segment>
-    </ion-card-content>
-  </ion-card>
+  <!-- Formulario de datos -->
+  <div class="section">
+    <div class="section-header">
+      <ion-icon name="person-outline"></ion-icon>
+      <h3>Información personal</h3>
+    </div>
+    <div class="card-glass">
+      <input type="text" [(ngModel)]="cliente.nombre" placeholder="Nombre completo" class="input-modern">
+      <input type="tel" [(ngModel)]="cliente.telefono" placeholder="Teléfono (+506)" class="input-modern">
+      <button class="btn-outline" (click)="guardarCliente()">Guardar cambios</button>
+    </div>
+  </div>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Servicios</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-radio-group [(ngModel)]="servicioSeleccionado">
-          <ion-item *ngFor="let servicio of servicios">
-            <ion-radio [value]="servicio.nombre" slot="start"></ion-radio>
-            <ion-label>{{ servicio.nombre }}</ion-label>
-            <ion-note slot="end">₡{{ servicio.precio }}</ion-note>
-          </ion-item>
-        </ion-radio-group>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Agenda tu cita</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item>
-        <ion-label>Fecha</ion-label>
-        <ion-datetime [(ngModel)]="cita.fecha" presentation="date" [min]="fechaMinima"></ion-datetime>
-      </ion-item>
-      
-      <div class="horario-grid">
-        <ion-button *ngFor="let hora of horasDisponibles" 
-                   [color]="getColorHora(hora)"
-                   [disabled]="isHoraOcupada(hora)"
-                   (click)="seleccionarHora(hora)"
-                   expand="block" size="small">
-          {{ hora }}
-        </ion-button>
+  <!-- Selección de barbero -->
+  <div class="section">
+    <div class="section-header">
+      <ion-icon name="people-outline"></ion-icon>
+      <h3>Elige tu barbero</h3>
+    </div>
+    <div class="barberos-slider">
+      <div *ngFor="let barbero of barberosActivos" 
+           class="barbero-card-modern"
+           [class.active]="cita.barbero === barbero.nombre"
+           (click)="cita.barbero = barbero.nombre">
+        <div class="barbero-avatar-modern">
+          <ion-icon name="person"></ion-icon>
+        </div>
+        <h4>{{ barbero.nombre }}</h4>
+        <div class="rating">
+          <ion-icon name="star"></ion-icon>
+          <span>{{ barbero.calificacion }}</span>
+        </div>
+        <div class="check-mark" *ngIf="cita.barbero === barbero.nombre">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </div>
       </div>
-      <ion-text color="medium">
-        <small>Verde Disponible | Rojo Ocupado | Azul Seleccionado</small>
-      </ion-text>
-    </ion-card-content>
-  </ion-card>
+    </div>
+  </div>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Resumen de cita</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label>Servicio:</ion-label>
-          <ion-note>{{ servicioActual?.nombre || 'No seleccionado' }}</ion-note>
-        </ion-item>
-        <ion-item>
-          <ion-label>Precio:</ion-label>
-          <ion-note>₡{{ servicioActual?.precio || 0 }}</ion-note>
-        </ion-item>
-        <ion-item>
-          <ion-label>Barbero:</ion-label>
-          <ion-note>{{ cita.barbero || 'No seleccionado' }}</ion-note>
-        </ion-item>
-        <ion-item>
-          <ion-label>Fecha:</ion-label>
-          <ion-note>{{ cita.fecha || 'No seleccionada' }}</ion-note>
-        </ion-item>
-        <ion-item>
-          <ion-label>Hora:</ion-label>
-          <ion-note>{{ cita.hora || 'No seleccionada' }}</ion-note>
-        </ion-item>
-      </ion-list>
+  <!-- Servicios -->
+  <div class="section">
+    <div class="section-header">
+      <ion-icon name="cut-outline"></ion-icon>
+      <h3>Servicios</h3>
+    </div>
+    <div class="servicios-grid-modern">
+      <div *ngFor="let servicio of servicios" 
+           class="servicio-card-modern"
+           [class.selected]="servicioSeleccionado === servicio.nombre"
+           (click)="servicioSeleccionado = servicio.nombre">
+        <div class="servicio-icon">
+          <ion-icon name="scissors-outline"></ion-icon>
+        </div>
+        <div class="servicio-details">
+          <h4>{{ servicio.nombre }}</h4>
+          <p>₡{{ servicio.precio }}</p>
+        </div>
+        <div class="servicio-radio" [class.checked]="servicioSeleccionado === servicio.nombre"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fecha y hora -->
+  <div class="section">
+    <div class="section-header">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <h3>Agenda tu cita</h3>
+    </div>
+    <div class="card-glass">
+      <input type="date" [(ngModel)]="cita.fecha" [min]="fechaMinima" class="input-modern">
       
-      <ion-button expand="block" color="warning" (click)="confirmarCita()" [disabled]="!citaValida()">
-        Confirmar cita
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+      <div class="horas-modern">
+        <button *ngFor="let hora of horasDisponibles" 
+                class="hora-modern"
+                [class.disponible]="!isHoraOcupada(hora) && cita.hora !== hora"
+                [class.ocupado]="isHoraOcupada(hora)"
+                [class.seleccionado]="cita.hora === hora"
+                [disabled]="isHoraOcupada(hora)"
+                (click)="seleccionarHora(hora)">
+          {{ hora }}
+        </button>
+      </div>
+      <div class="legend">
+        <span><i class="dot green"></i> Disponible</span>
+        <span><i class="dot red"></i> Ocupado</span>
+        <span><i class="dot blue"></i> Seleccionado</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resumen -->
+  <div class="section">
+    <div class="section-header">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <h3>Resumen de tu cita</h3>
+    </div>
+    <div class="resumen-modern">
+      <div class="resumen-row">
+        <span>Servicio</span>
+        <strong>{{ servicioActual?.nombre || '---' }}</strong>
+        <span class="price">{{ servicioActual?.precio ? '₡' + servicioActual.precio : '' }}</span>
+      </div>
+      <div class="resumen-row">
+        <span>Barbero</span>
+        <strong>{{ cita.barbero || '---' }}</strong>
+      </div>
+      <div class="resumen-row">
+        <span>Fecha</span>
+        <strong>{{ cita.fecha || '---' }}</strong>
+      </div>
+      <div class="resumen-row">
+        <span>Hora</span>
+        <strong>{{ cita.hora || '---' }}</strong>
+      </div>
+      <div class="resumen-total">
+        <span>Total</span>
+        <strong>₡{{ servicioActual?.precio || 0 }}</strong>
+      </div>
+    </div>
+    <button class="btn-primary" (click)="confirmarCita()" [disabled]="!citaValida()">
+      Confirmar cita
+      <ion-icon name="arrow-forward-outline"></ion-icon>
+    </button>
+  </div>
+
 </ion-content>

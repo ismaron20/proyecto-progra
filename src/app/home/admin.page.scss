@@ -1,28 +1,416 @@
-.barra-progreso {
-  background-color: #2a2a2a;
-  border-radius: 10px;
-  height: 30px;
-  margin: 10px 0;
-  overflow: hidden;
+// Variables
+$oro: #ffd700;
+$oro-oscuro: #ccac00;
+$fondo: #0f0f0f;
+$card-bg: rgba(25, 25, 25, 0.95);
+$texto: #ffffff;
+$texto-sec: #888888;
+$rojo: #e53935;
+
+.bg-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $fondo;
+  background-image: radial-gradient(circle at 90% 10%, rgba($oro, 0.05) 0%, transparent 60%);
+  z-index: -1;
+}
+
+// Header
+.header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 10px 0;
+}
+
+.back-btn, .logout-btn {
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba($oro, 0.3);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
   
-  .progreso {
-    background-color: #d4af37;
-    height: 100%;
-    transition: width 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 10px;
-    color: #0a0a0a;
-    font-weight: bold;
+  ion-icon {
+    font-size: 22px;
+    color: $oro;
+  }
+  
+  &:hover {
+    background: rgba($oro, 0.1);
   }
 }
 
-.notificacion {
-  border-left: 3px solid #d4af37;
-  margin-bottom: 10px;
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  ion-icon {
+    font-size: 28px;
+    color: $oro;
+  }
+  
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    color: $texto;
+  }
 }
 
-ion-card-title {
-  color: #d4af37;
+// Dashboard stats
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 25px;
 }
+
+.stat-item {
+  background: $card-bg;
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba($oro, 0.15);
+  
+  ion-icon {
+    font-size: 28px;
+    color: $oro;
+  }
+  
+  div {
+    display: flex;
+    flex-direction: column;
+    
+    span {
+      font-size: 11px;
+      color: $texto-sec;
+    }
+    
+    strong {
+      font-size: 16px;
+      color: $texto;
+    }
+  }
+}
+
+// Cards
+.card-modern {
+  background: $card-bg;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba($oro, 0.15);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba($oro, 0.15);
+  
+  ion-icon {
+    font-size: 20px;
+    color: $oro;
+  }
+  
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    color: $texto;
+  }
+}
+
+.card-body {
+  padding: 20px;
+}
+
+// Inputs
+.input-dark {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba($oro, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: $texto;
+  font-size: 14px;
+  transition: all 0.3s;
+  
+  &:focus {
+    outline: none;
+    border-color: $oro;
+  }
+  
+  &::placeholder {
+    color: $texto-sec;
+  }
+}
+
+.select-dark {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba($oro, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: $texto;
+  font-size: 14px;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+.input-wrapper {
+  label {
+    display: block;
+    font-size: 12px;
+    color: $texto-sec;
+    margin-bottom: 5px;
+  }
+}
+
+.row-2cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+// Botones
+.btn-danger {
+  width: 100%;
+  background: rgba($rojo, 0.2);
+  border: 1px solid $rojo;
+  border-radius: 12px;
+  padding: 12px;
+  color: $rojo;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  &:hover {
+    background: rgba($rojo, 0.3);
+  }
+  
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba($oro, 0.5);
+  border-radius: 12px;
+  padding: 12px;
+  color: $oro;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+  
+  &:hover {
+    background: rgba($oro, 0.1);
+  }
+}
+
+// Barberos list
+.barberos-list-modern {
+  margin-bottom: 20px;
+}
+
+.barbero-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.barbero-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+  .barbero-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba($oro, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    ion-icon {
+      font-size: 22px;
+      color: $oro;
+    }
+  }
+  
+  h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    color: $texto;
+  }
+  
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    
+    ion-icon {
+      font-size: 11px;
+      color: $oro;
+    }
+    
+    span {
+      font-size: 11px;
+      color: $texto-sec;
+    }
+  }
+}
+
+// Toggle switch
+.toggle-switch {
+  input {
+    display: none;
+    
+    &:checked + label {
+      background: $oro;
+      
+      &::after {
+        left: 22px;
+        background: $fondo;
+      }
+    }
+  }
+  
+  label {
+    display: block;
+    width: 48px;
+    height: 24px;
+    background: #444;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 18px;
+      background: $texto;
+      border-radius: 50%;
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      transition: all 0.3s;
+    }
+  }
+}
+
+// Agregar barbero
+.add-barbero {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  
+  input {
+    flex: 1;
+  }
+  
+  button {
+    margin-top: 0;
+    white-space: nowrap;
+  }
+}
+
+// Meta
+.meta-section {
+  margin-bottom: 20px;
+}
+
+.meta-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  
+  span {
+    color: $texto-sec;
+    font-size: 13px;
+  }
+  
+  strong {
+    color: $oro;
+    font-size: 14px;
+  }
+}
+
+.progress-bar {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, $oro, $oro-oscuro);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+  transition: width 0.3s;
+  
+  span {
+    font-size: 12px;
+    font-weight: bold;
+    color: $fondo;
+  }
+}
+
+// Payment methods
+.payment-methods {
+  p {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: $texto-sec;
+  }
+}
+
+.payment-options {
+  display: flex;
+  gap: 20px;
+}
+
+.payment-option {
+  display: flex;
+  align-items:

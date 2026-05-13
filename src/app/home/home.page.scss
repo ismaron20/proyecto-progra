@@ -1,31 +1,495 @@
-.slogan-container {
-  text-align: center;
-  margin-bottom: 20px;
+// Variables
+$oro: #ffd700;
+$oro-oscuro: #ccac00;
+$fondo: #0f0f0f;
+$card-bg: rgba(25, 25, 25, 0.95);
+$texto: #ffffff;
+$texto-sec: #888888;
+
+.bg-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $fondo;
+  background-image: radial-gradient(circle at 10% 20%, rgba($oro, 0.05) 0%, transparent 50%);
+  z-index: -1;
+}
+
+// Header
+.header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 10px 0;
+}
+
+.user-greeting {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   
-  h2 {
-    color: #d4af37;
-    font-style: italic;
+  .avatar {
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, $oro, $oro-oscuro);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    ion-icon {
+      font-size: 32px;
+      color: $fondo;
+    }
+  }
+  
+  .greeting-text {
+    p {
+      margin: 0;
+      font-size: 12px;
+      color: $texto-sec;
+    }
+    
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      color: $texto;
+    }
   }
 }
 
-.horario-grid {
+.logout-btn {
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba($oro, 0.3);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  ion-icon {
+    font-size: 22px;
+    color: $oro;
+  }
+  
+  &:hover {
+    background: rgba($oro, 0.1);
+  }
+}
+
+// Stats
+.stats-row {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.stat-box {
+  background: $card-bg;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  border: 1px solid rgba($oro, 0.15);
+  
+  ion-icon {
+    font-size: 24px;
+    color: $oro;
+    margin-bottom: 8px;
+  }
+  
+  span {
+    display: block;
+    font-size: 11px;
+    color: $texto-sec;
+    margin-bottom: 5px;
+  }
+  
+  strong {
+    font-size: 18px;
+    color: $texto;
+  }
+}
+
+// Secciones
+.section {
+  margin-bottom: 25px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  
+  ion-icon {
+    font-size: 20px;
+    color: $oro;
+  }
+  
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    color: $texto;
+    font-weight: 500;
+  }
+}
+
+// Cards
+.card-glass {
+  background: $card-bg;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid rgba($oro, 0.15);
+}
+
+.input-modern {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba($oro, 0.2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: $texto;
+  font-size: 14px;
+  margin-bottom: 12px;
+  transition: all 0.3s;
+  
+  &:focus {
+    outline: none;
+    border-color: $oro;
+  }
+  
+  &::placeholder {
+    color: $texto-sec;
+  }
+}
+
+// Barberos
+.barberos-slider {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 5px 0;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.barbero-card-modern {
+  min-width: 100px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  border: 1px solid rgba($oro, 0.15);
+  
+  &:hover {
+    transform: translateY(-3px);
+    background: rgba($oro, 0.1);
+  }
+  
+  &.active {
+    border-color: $oro;
+    background: rgba($oro, 0.1);
+  }
+  
+  .barbero-avatar-modern {
+    width: 60px;
+    height: 60px;
+    background: rgba($oro, 0.2);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    
+    ion-icon {
+      font-size: 30px;
+      color: $oro;
+    }
+  }
+  
+  h4 {
+    margin: 0 0 5px;
+    font-size: 14px;
+    color: $texto;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    
+    ion-icon {
+      font-size: 10px;
+      color: $oro;
+    }
+    
+    span {
+      font-size: 11px;
+      color: $texto-sec;
+    }
+  }
+  
+  .check-mark {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    
+    ion-icon {
+      font-size: 20px;
+      color: $oro;
+      background: $fondo;
+      border-radius: 50%;
+    }
+  }
+}
+
+// Servicios
+.servicios-grid-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.servicio-card-modern {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid rgba($oro, 0.15);
+  
+  &:hover {
+    background: rgba($oro, 0.05);
+  }
+  
+  &.selected {
+    border-color: $oro;
+    background: rgba($oro, 0.1);
+  }
+  
+  .servicio-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba($oro, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    ion-icon {
+      font-size: 22px;
+      color: $oro;
+    }
+  }
+  
+  .servicio-details {
+    flex: 1;
+    
+    h4 {
+      margin: 0 0 4px;
+      font-size: 14px;
+      color: $texto;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 13px;
+      color: $oro;
+      font-weight: 600;
+    }
+  }
+  
+  .servicio-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba($oro, 0.5);
+    border-radius: 50%;
+    transition: all 0.3s;
+    
+    &.checked {
+      background: $oro;
+      border-color: $oro;
+    }
+  }
+}
+
+// Horas
+.horas-modern {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   margin: 15px 0;
 }
 
-ion-card {
-  background-color: #1a1a1a;
-  margin-bottom: 20px;
+.hora-modern {
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  &.disponible {
+    background: #2e7d32;
+    color: white;
+    
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+  
+  &.ocupado {
+    background: #c62828;
+    color: white;
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  &.seleccionado {
+    background: #1565c0;
+    color: white;
+    box-shadow: 0 0 10px rgba(21, 101, 192, 0.5);
+  }
 }
 
-ion-card-title {
-  color: #d4af37;
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+  
+  span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: $texto-sec;
+    
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      
+      &.green { background: #2e7d32; }
+      &.red { background: #c62828; }
+      &.blue { background: #1565c0; }
+    }
+  }
 }
 
-ion-button[color="warning"] {
-  --background: #d4af37;
-  --color: #0a0a0a;
-  --background-hover: #c4a02e;
+// Resumen
+.resumen-modern {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.resumen-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  
+  span {
+    color: $texto-sec;
+    font-size: 13px;
+  }
+  
+  strong {
+    color: $texto;
+    font-size: 13px;
+  }
+  
+  .price {
+    color: $oro;
+    font-weight: 600;
+  }
+}
+
+.resumen-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0 0;
+  margin-top: 5px;
+  
+  span {
+    color: $oro;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  strong {
+    color: $oro;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+// Botones
+.btn-outline {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba($oro, 0.5);
+  border-radius: 12px;
+  padding: 12px;
+  color: $oro;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  &:hover {
+    background: rgba($oro, 0.1);
+  }
+}
+
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, $oro, $oro-oscuro);
+  border: none;
+  border-radius: 15px;
+  padding: 14px;
+  color: $fondo;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  &:hover:not(:disabled) {
+    transform: scale(1.02);
+    box-shadow: 0 5px 20px rgba($oro, 0.3);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  ion-icon {
+    font-size: 18px;
+  }
 }

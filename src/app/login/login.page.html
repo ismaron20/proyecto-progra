@@ -1,105 +1,56 @@
 <ion-content class="ion-padding">
-  <!-- Fondo decorativo -->
-  <div class="fondo-decorativo"></div>
-
-  <!-- Logo y titulo -->
-  <div class="logo-container">
-    <div class="logo-grande">
-      <ion-icon name="cut-outline" class="logo-icon"></ion-icon>
-    </div>
-    <h1 class="titulo-principal">Barbería</h1>
-    <p class="slogan-nuevo">"Estilo & Clase"</p>
-  </div>
-
-  <!-- Pantalla de seleccion -->
-  <div *ngIf="modo === 'seleccion'" class="opciones-container">
-    <div class="tarjeta-cliente" (click)="seleccionarCliente()">
-      <div class="icono-cliente">
-        <ion-icon name="person-outline"></ion-icon>
+  <div class="fondo-gradiente"></div>
+  
+  <div class="contenido-principal">
+    
+    <div class="marca">
+      <div class="logo-circle">
+        <ion-icon name="cut-outline"></ion-icon>
       </div>
-      <div class="texto-cliente">
-        <h3>Cliente</h3>
-        <p>Agenda tu cita fácilmente</p>
-      </div>
-      <ion-icon name="chevron-forward-outline" class="flecha"></ion-icon>
+      <h1 class="titulo-marca">Barbería</h1>
+      <p class="slogan-marca">Estilo & Clase</p>
     </div>
 
-    <div class="tarjeta-admin" (click)="seleccionarAdmin()">
-      <div class="icono-admin">
-        <ion-icon name="shield-outline"></ion-icon>
-      </div>
-      <div class="texto-admin">
-        <h3>Administrador</h3>
-        <p>Gestiona tu barbería</p>
-      </div>
-      <ion-icon name="chevron-forward-outline" class="flecha"></ion-icon>
-    </div>
-  </div>
+    <div class="form-card">
+      <h2>Iniciar Sesión</h2>
+      <p>Ingresa con tu correo electrónico</p>
 
-  <!-- Registro de cliente -->
-  <div *ngIf="modo === 'cliente'">
-    <div class="header-volver">
-      <ion-button fill="clear" (click)="volver()" class="btn-volver">
-        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
-        Volver
-      </ion-button>
-    </div>
-
-    <div class="formulario-cliente">
-      <h2 class="titulo-formulario">Registro de Cliente</h2>
-      <p class="subtitulo-formulario">Completa tus datos para agendar</p>
-
-      <div class="campo">
-        <ion-icon name="person-outline" class="campo-icono"></ion-icon>
-        <ion-input [(ngModel)]="clienteNombre" type="text" placeholder="Nombre completo"></ion-input>
+      <div class="input-group">
+        <ion-icon name="mail-outline" class="input-icon"></ion-icon>
+        <ion-input [(ngModel)]="email" type="email" placeholder="Correo electrónico" (ionChange)="onEmailChange()"></ion-input>
       </div>
 
-      <div class="campo">
-        <ion-icon name="call-outline" class="campo-icono"></ion-icon>
-        <ion-input [(ngModel)]="clienteTelefono" type="tel" placeholder="Teléfono (+506)"></ion-input>
+      <div class="input-group" *ngIf="mostrarContrasena">
+        <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+        <ion-input [(ngModel)]="password" type="password" placeholder="Contraseña"></ion-input>
       </div>
 
-      <ion-button expand="block" class="btn-registrar" (click)="registrarCliente()">
-        Registrarme
-        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
-      </ion-button>
-    </div>
-  </div>
+      <button class="btn-principal" (click)="iniciarSesion()" [disabled]="cargando">
+        <ion-icon [name]="cargando ? 'refresh-outline' : 'log-in-outline'" [class.spinner]="cargando"></ion-icon>
+        {{ cargando ? 'Verificando...' : 'Continuar' }}
+      </button>
 
-  <!-- Login de administrador -->
-  <div *ngIf="modo === 'admin'">
-    <div class="header-volver">
-      <ion-button fill="clear" (click)="volver()" class="btn-volver">
-        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
-        Volver
-      </ion-button>
+      <div class="separador">
+        <span>O</span>
+      </div>
+
+      <button class="btn-google" (click)="loginConGoogle()" [disabled]="cargando">
+        <ion-icon name="logo-google"></ion-icon>
+        Continuar con Google
+      </button>
+
+      <div *ngIf="errorMensaje" class="error-mensaje">
+        {{ errorMensaje }}
+      </div>
+      
+      <div *ngIf="infoMensaje" class="info-mensaje">
+        {{ infoMensaje }}
+      </div>
     </div>
 
-    <div class="formulario-admin">
-      <div class="admin-icono-grande">
-        <ion-icon name="shield-checkmark-outline"></ion-icon>
-      </div>
-      <h2 class="titulo-formulario">Acceso Administrador</h2>
-      <p class="subtitulo-formulario">Ingresa tus credenciales</p>
-
-      <div class="campo">
-        <ion-icon name="mail-outline" class="campo-icono"></ion-icon>
-        <ion-input [(ngModel)]="adminEmail" type="email" placeholder="Correo electrónico"></ion-input>
-      </div>
-
-      <div class="campo">
-        <ion-icon name="lock-closed-outline" class="campo-icono"></ion-icon>
-        <ion-input [(ngModel)]="adminPassword" type="password" placeholder="Contraseña"></ion-input>
-      </div>
-
-      <ion-text color="danger" *ngIf="errorAdmin">
-        <p class="error-mensaje">{{ errorAdmin }}</p>
-      </ion-text>
-
-      <ion-button expand="block" class="btn-ingresar" (click)="ingresarAdmin()">
-        Ingresar
-        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
-      </ion-button>
+    <div class="footer">
+      <p>Al continuar, aceptas nuestros términos y condiciones</p>
     </div>
+
   </div>
 </ion-content>

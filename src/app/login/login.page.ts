@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, 
-  IonItem, IonLabel, IonInput, IonButton, IonText, IonIcon
+  IonContent, IonInput, IonButton, IonText, IonIcon
 } from '@ionic/angular/standalone';
 import { BarberiaService } from '../services/barberia.service';
 import { AuthService } from '../services/auth.service';
 import { addIcons } from 'ionicons';
-import { personOutline, callOutline, mailOutline, lockClosedOutline, cutOutline, shieldOutline, shieldCheckmarkOutline, arrowBackOutline, arrowForwardOutline, chevronForwardOutline } from 'ionicons/icons';
+import { 
+  mailOutline, lockClosedOutline, cutOutline, logInOutline,
+  logoGoogle, refreshOutline
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-login',
@@ -18,19 +20,18 @@ import { personOutline, callOutline, mailOutline, lockClosedOutline, cutOutline,
   standalone: true,
   imports: [
     CommonModule, FormsModule,
-    IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent,
-    IonItem, IonLabel, IonInput, IonButton, IonText, IonIcon
+    IonContent, IonInput, IonButton, IonText, IonIcon
   ]
 })
 export class LoginPage {
-  modo: 'seleccion' | 'cliente' | 'admin' = 'seleccion';
-  
-  clienteNombre: string = '';
-  clienteTelefono: string = '';
-  
-  adminEmail: string = '';
-  adminPassword: string = '';
-  errorAdmin: string = '';
+  email: string = '';
+  password: string = '';
+  errorMensaje: string = '';
+  infoMensaje: string = '';
+  cargando: boolean = false;
+  mostrarContrasena: boolean = false;
+
+  private readonly ADMIN_EMAIL = 'admin@barberia.com';
 
   constructor(
     private router: Router,
@@ -38,68 +39,103 @@ export class LoginPage {
     private authService: AuthService
   ) {
     addIcons({
-      personOutline,
-      callOutline,
-      mailOutline,
-      lockClosedOutline,
-      cutOutline,
-      shieldOutline,
-      shieldCheckmarkOutline,
-      arrowBackOutline,
-      arrowForwardOutline,
-      chevronForwardOutline
+      mailOutline, lockClosedOutline, cutOutline, logInOutline,
+      logoGoogle, refreshOutline
     });
   }
 
-  seleccionarCliente() {
-    this.modo = 'cliente';
+  onEmailChange() {
+    // Mostrar campo de contraseña solo si es el admin
+    this.mostrarContrasena = this.email.toLowerCase() === this.ADMIN_EMAIL;
+    if (!this.mostrarContrasena) {
+      this.password = '';
+    }
+    this.errorMensaje = '';
   }
 
-  seleccionarAdmin() {
-    this.modo = 'admin';
-  }
-
-  volver() {
-    this.modo = 'seleccion';
-    this.errorAdmin = '';
-  }
-
-  registrarCliente() {
-    if (!this.clienteNombre || !this.clienteTelefono) {
-      alert('Por favor completa tu nombre y teléfono');
+  async iniciarSesion() {
+    this.errorMensaje = '';
+    this.infoMensaje = '';
+    
+    if (!this.email || !this.email.includes('@')) {
+      this.errorMensaje = 'Ingresa un correo electrónico válido';
       return;
     }
 
-    const cliente = {
-      nombre: this.clienteNombre,
-      telefono: this.clienteTelefono
-    };
-    localStorage.setItem('clienteBarberia', JSON.stringify(cliente));
-    this.barberiaService.clienteActual = cliente;
+    this.cargando = true;
+
+    // Caso 1: Es administrador
+    if (this.email.toLowerCase() === this.ADMIN_EMAIL) {
+      if (!this.password) {
+        this.errorMensaje = 'Ingresa la contraseña de administrador';
+        this.cargando = false;
+        return;
+      }
+      
+      const success = await this.authService.login(this.email, this.password);
+      
+      if (success) {
+        this.infoMensaje = 'Bienvenido Administrador';
+        setTimeout(() => {
+          this.router.navigate(['/admin']);
+        }, 1000);
+      } else {
+        this.errorMensaje = 'Contraseña incorrecta';
+        this.password = '';
+      }
+    } 
+    // Caso 2: Es cliente (registro automático)
+    else {
+      const nombreCliente = this.email.split('@')[0];
+      const cliente = {
+        nombre: nombreCliente,
+        telefono: '00000000'
+      };
+      localStorage.setItem('clienteBarberia', JSON.stringify(cliente));
+      this.barberiaService.clienteActual = cliente;
+      
+      this.infoMensaje = `¡Bienvenido ${nombreCliente}!`;
+      setTimeout(() => {
+        this.router.navigate(['/home']);
+      }, 1000);
+    }
     
-    alert(`¡Bienvenido ${this.clienteNombre}!`);
-    this.router.navigate(['/home']);
+    this.cargando = false;
   }
 
-  async ingresarAdmin() {
-    console.log('=== INTENTANDO LOGIN ===');
-    console.log('Correo:', this.adminEmail);
-    console.log('Contraseña:', this.adminPassword);
+  async loginConGoogle() {
+    this.cargando = true;
+    this.errorMensaje = '';
+    this.infoMensaje = '';
     
-    if (!this.adminEmail || !this.adminPassword) {
-      this.errorAdmin = 'Ingresa correo y contraseña';
-      return;
-    }
-
-    const success = await this.authService.login(this.adminEmail, this.adminPassword);
+    const success = await this.authService.loginWithGoogle();
     
     if (success) {
-      console.log('Login exitoso');
-      alert('Bienvenido Administrador');
-      this.router.navigate(['/admin']);
+      const email = this.authService.usuarioActual?.email || '';
+      
+      if (email.toLowerCase() === this.ADMIN_EMAIL) {
+        this.infoMensaje = 'Bienvenido Administrador';
+        setTimeout(() => {
+          this.router.navigate(['/admin']);
+        }, 1000);
+      } else {
+        const nombreCliente = email.split('@')[0];
+        const cliente = {
+          nombre: nombreCliente,
+          telefono: '00000000'
+        };
+        localStorage.setItem('clienteBarberia', JSON.stringify(cliente));
+        this.barberiaService.clienteActual = cliente;
+        
+        this.infoMensaje = `¡Bienvenido ${nombreCliente}!`;
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 1000);
+      }
     } else {
-      console.log('Login fallido');
-      this.errorAdmin = 'Correo o contraseña incorrectos';
+      this.errorMensaje = 'Error al iniciar sesión con Google';
     }
+    
+    this.cargando = false;
   }
 }

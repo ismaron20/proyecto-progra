@@ -7,9 +7,11 @@ import {
   IonCardHeader, IonCardTitle, IonCardContent, IonItem, 
   IonLabel, IonInput, IonButton, IonSegment, IonSegmentButton,
   IonList, IonRadioGroup, IonRadio, IonNote, IonDatetime,
-  IonText, IonButtons
+  IonText, IonButtons, IonIcon
 } from '@ionic/angular/standalone';
 import { BarberiaService, Cliente, Cita } from '../services/barberia.service';
+import { addIcons } from 'ionicons';
+import { cutOutline, logOutOutline, personOutline, callOutline, star, calendarOutline, timeOutline, checkmarkOutline, saveOutline, arrowBackOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +24,7 @@ import { BarberiaService, Cliente, Cita } from '../services/barberia.service';
     IonCardHeader, IonCardTitle, IonCardContent, IonItem,
     IonLabel, IonInput, IonButton, IonSegment, IonSegmentButton,
     IonList, IonRadioGroup, IonRadio, IonNote, IonDatetime,
-    IonText, IonButtons
+    IonText, IonButtons, IonIcon
   ]
 })
 export class HomePage implements OnInit {
@@ -44,7 +46,13 @@ export class HomePage implements OnInit {
   constructor(
     public barberiaService: BarberiaService,
     private router: Router
-  ) {}
+  ) {
+    addIcons({
+      cutOutline, logOutOutline, personOutline, callOutline, 
+      star, calendarOutline, timeOutline, checkmarkOutline, 
+      saveOutline, arrowBackOutline
+    });
+  }
 
   ngOnInit() {
     this.fechaMinima = new Date().toISOString();
@@ -53,7 +61,6 @@ export class HomePage implements OnInit {
   }
 
   cargarBarberos() {
-    // Cargar barberos directamente del servicio
     this.barberosActivos = this.barberiaService.obtenerBarberosActivos();
     console.log('Barberos cargados:', this.barberosActivos);
   }
@@ -134,10 +141,6 @@ export class HomePage implements OnInit {
     
     this.cita = { barbero: '', fecha: '', hora: '' };
     this.servicioSeleccionado = '';
-  }
-
-  irAdmin() {
-    this.router.navigate(['/admin']);
   }
 
   cerrarSesion() {

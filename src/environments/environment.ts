@@ -1,12 +1,11 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyAbuEpWUf90fU-STVeJFpibsYqwvj-SOtQ",
-    authDomain: "barberia-estilo-y-clase.firebaseapp.com",
-    projectId: "barberia-estilo-y-clase",
-    storageBucket: "barberia-estilo-y-clase.firebasestorage.app",
-    messagingSenderId: "599613486526",
-    appId: "1:599613486526:web:836b760de396a1593275ef",
-    measurementId: "G-MTNFONZQ36"
+    apiKey: "AIzaSyBCePJNFUoJ-lY8gfZ9ENjK2X78BkF4KTo",
+    authDomain: "barberia-app-nueva.firebaseapp.com",
+    projectId: "barberia-app-nueva",
+    storageBucket: "barberia-app-nueva.firebasestorage.app",
+    messagingSenderId: "56439839182",
+    appId: "1:56439839182:web:bea91573163fd50011f39f"
   }
 };
